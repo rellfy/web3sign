@@ -58,3 +58,9 @@ button {
     font-family: 'Lucida Console', serif;
     user-select: none;
 }
+
+#link {
+    overflow: hidden;
+    white-space: nowrap;
+    max-height: 2rem;
+}
