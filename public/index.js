@@ -10,6 +10,13 @@ const setText = (id, value) => {
   }
 };
 
+const getText = (id) => {
+  const element = document.getElementById(id);
+  return element.value
+    ? element.value
+    : element.innerText;
+}
+
 const connectMetaMask = async () => {
   console.log("connecting to MetaMask");
   await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -32,7 +39,7 @@ const signData = async (input) => {
 };
 
 const verifyData = (input, output) => {
-  const address = document.getElementById("public-key").value;
+  const address = getText("public-key");
   const result = ethers.utils.verifyMessage(input, output);
   const resultMessage = `${result}\n${
     (address.toLocaleString() === result.toLocaleString())
@@ -42,15 +49,55 @@ const verifyData = (input, output) => {
   setText("verification", resultMessage);
 };
 
-// Connect to MetaMask.
-const main = async() => {
-  await connectMetaMask();
+const searchToObject = () => {
+  const pairs = window.location.search.substring(1).split("&");
+  const obj = {};
+  for (let i in pairs) {
+    if (pairs[i] === "") continue;
+    const pair = pairs[i].split("=");
+    obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+  }
+  return obj;
+}
+
+const buildSharingLink = () => {
+  const params = {
+    address: getText("public-key"),
+    input: getText("input"),
+    output: getText("output")
+  };
+  let qs = "";
+  const getPrefix = () => qs === "" ? "?" : "&";
+  if (params.address)
+    qs += `${getPrefix()}address=${params.address}`;
+  if (params.input)
+    qs += `${getPrefix()}input=${params.input}`;
+  if (params.output)
+    qs += `${getPrefix()}output=${params.output}`;
+  const link = window.location.origin +
+    window.location.pathname + qs;
+  setText("link", link);
 };
+
+const loadQueryString = () => {
+  const qs = searchToObject();
+  if (qs.address)
+    setText("public-key", qs.address);
+  if (qs.input)
+    setText("input", qs.input);
+  if (qs.output)
+    setText("output", qs.output);
+  if (qs.input && qs.output)
+    verifyData(qs.input, qs.output);
+  buildSharingLink();
+};
+
+loadQueryString();
 
 document
   .querySelector("#btn-connect")
   .addEventListener("click", () =>
-    main()
+    connectMetaMask()
     .then(() => console.log("done"))
     .catch((e) => console.error(e))
   );
@@ -58,22 +105,11 @@ document
 document
   .querySelector("#btn-sign")
   .addEventListener("click", () =>
-    signData(
-      document
-        .getElementById("input")
-        .value
-    )
+    signData(getText("input"))
   );
 
 document
   .querySelector("#btn-verify")
   .addEventListener("click", () =>
-    verifyData(
-      document
-        .getElementById("input")
-        .value,
-      document
-        .getElementById("output")
-        .value
-    )
+    verifyData(getText("input"), getText("output"))
   );
