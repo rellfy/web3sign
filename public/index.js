@@ -92,6 +92,10 @@ const loadQueryString = () => {
   buildSharingLink();
 };
 
+const copySharingLink = () => {
+  navigator.clipboard.writeText(getText("link"));
+};
+
 loadQueryString();
 
 document
@@ -113,3 +117,7 @@ document
   .addEventListener("click", () =>
     verifyData(getText("input"), getText("output"))
   );
+
+document
+  .querySelector("#btn-copy")
+  .addEventListener("click", copySharingLink);
