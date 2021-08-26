@@ -121,3 +121,5 @@ document
 document
   .querySelector("#btn-copy")
   .addEventListener("click", copySharingLink);
+
+document.onkeyup = buildSharingLink;
