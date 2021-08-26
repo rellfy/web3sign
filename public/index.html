@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title>web3sign</title>
+    <link rel="stylesheet" href="./index.css" />
+</head>
+<body>
+  <div id="root">
+    <div id="params">
+      <input
+        id="public-key"
+        value="0x0000000000000000000000000000000000000000"
+      />
+      <button id="btn-connect">connect</button>
+    </div>
+    <textarea id="input"></textarea>
+    <button id="btn-sign">sign</button>
+    <textarea id="output"></textarea>
+    <button id="btn-verify">verify</button>
+    <div id="verification">not verified</div>
+    <div id="share">
+      <div id="link">&nbsp;</div>
+      <button id="btn-copy">copy</button>
+    </div>
+  </div>
+  <script
+    integrity="sha384-NvZDg6ALAelzcNNdjR3jfJwpEPg50zAPV5PB5BV1zx/+KF48DYHNKeUCllqDNjKj"
+    src="./ethers.min.js"
+  ></script>
+  <script src="./index.js"></script>
+</body>
+</html>
