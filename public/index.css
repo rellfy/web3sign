@@ -1,0 +1,60 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #ccc;
+}
+
+#root {
+    width: 75%;
+    margin: auto;
+}
+
+button {
+    background-color: #aaa;
+    border: 2px solid #606060;
+    border-radius: 0;
+    outline: none;
+    text-transform: uppercase;
+    user-select: none;
+    cursor: pointer;
+    height: calc(2rem + 3px);
+    vertical-align: top;
+    font-weight: 600;
+    color: #404040;
+}
+
+#params, #share {
+    display: flex;
+    width: 100%;
+}
+
+#public-key, #input, #output, #verification, #link {
+    background-color: #bbb;
+    font-size: 12px;
+    line-height: 2rem;
+    padding: 0;
+    border: 1px solid #909090;
+    margin: 1px 0;
+    width: 100%;
+}
+
+#input, #output {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+}
+
+#public-key {
+    flex: 5;
+}
+
+#btn-sign, #btn-verify {
+    width: 100%;
+}
+
+#verification {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Lucida Console', serif;
+    user-select: none;
+}
